@@ -68,7 +68,7 @@ git commit -m "Initial commit — DiplomacyPrep v1"
 
 # 4. Create a new repository on github.com (no README, no .gitignore)
 #    then link it here:
-git remote add origin https://github.com/YOUR_USERNAME/diplomacyprep.git
+git remote add origin https://github.com/ankitsuhagiya/diplomacytraining.git
 
 # 5. Push
 git push -u origin main
