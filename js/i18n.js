@@ -43,6 +43,9 @@ const T = {
     prepDone: "Preparation done",
     secSpoken: "sec spoken",
     minSpoken: "min spoken",
+    impressumLink: "Legal Notice",
+    datenschutzLink: "Privacy Policy",
+    shareLabel: "Share",
   },
   de: {
     phaseNum1: "01", phaseIdle: "Start", phasePrep: "Vorbereitung", phaseSpeak: "Vortrag", phaseDone: "Auswertung",
@@ -83,6 +86,9 @@ const T = {
     prepDone: "Vorbereitung beendet",
     secSpoken: "Sek. gesprochen",
     minSpoken: "Min. gesprochen",
+    impressumLink: "Impressum",
+    datenschutzLink: "Datenschutz",
+    shareLabel: "Teilen",
   },
 };
 
@@ -118,6 +124,10 @@ function applyTranslations() {
   if (pauseLabel) {
     pauseLabel.textContent = paused ? t("resumeBtn") : t("pauseBtn");
   }
+
+  // Sync language in any open modals
+  document.querySelectorAll(".modal-lang-en").forEach(el => { el.style.display = lang === "en" ? "" : "none"; });
+  document.querySelectorAll(".modal-lang-de").forEach(el => { el.style.display = lang === "de" ? "" : "none"; });
 
   buildCatChips();
 }
