@@ -1,6 +1,5 @@
 // ═══════════════════════════════════════════════════════
-// i18n.js — English & German UI translations
-// Add a new language by copying one block and translating
+// i18n.js — English UI strings
 // ═══════════════════════════════════════════════════════
 
 const T = {
@@ -47,63 +46,12 @@ const T = {
     datenschutzLink: "Privacy Policy",
     shareLabel: "Share",
   },
-  de: {
-    phaseNum1: "01", phaseIdle: "Start", phasePrep: "Vorbereitung", phaseSpeak: "Vortrag", phaseDone: "Auswertung",
-    heroTitle: "Vorbereitung auf den Auswärtigen Dienst",
-    heroSub: "Zieh ein zufälliges Thema aus der Außenpolitik, notiere Kernpunkte und übe den freien Vortrag — genau wie in der Prüfung.",
-    prepLabel: "Vorbereitungszeit",
-    speakLabel: "Vortragszeit",
-    catLabel: "Themenbereiche",
-    drawBtn: "Thema ziehen",
-    histLabel: "Sitzungsverlauf",
-    prepPhaseLabel: "Vorbereitungsphase",
-    prepNote: "Stichpunkte, Argumente, Beispiele notieren.",
-    prepLeft: "verbleibend",
-    hintTitle: "Tipp:",
-    hintText: "Struktur: Kurzdefinition → Kontext → Akteure → Bewertung → Schlussfolgerung.",
-    startSpeakBtn: "Vortrag beginnen",
-    newTopicBtn: "Neues Thema",
-    speakPhaseLabel: "Vortragsphase — Jetzt frei sprechen",
-    speakLeft: "verbleibend",
-    pauseBtn: "⏸ Pause",
-    resumeBtn: "▶ Weiter",
-    finishBtn: "✓ Vorzeitig beenden",
-    notesRef: "Deine Notizen",
-    doneLabel: "Runde abgeschlossen",
-    yourNotesLabel: "Deine Notizen",
-    selfEvalTitle: "Selbstauswertung:",
-    evalItems: [
-      "Habe ich mit einer klaren Definition oder Einordnung begonnen?",
-      "Habe ich konkrete Beispiele, Verträge oder Institutionen genannt?",
-      "Habe ich mehrere Perspektiven beleuchtet?",
-      "War mein Schluss klar und überzeugend?",
-      "War mein Vortrag strukturiert und flüssig?",
-    ],
-    nextTopicBtn: "Nächstes Thema ziehen",
-    homeBtn: "↩ Startseite",
-    notesPlaceholder: "Kernpunkte, Beispiele, Argumente…",
-    timesUp: "Zeit abgelaufen",
-    prepDone: "Vorbereitung beendet",
-    secSpoken: "Sek. gesprochen",
-    minSpoken: "Min. gesprochen",
-    impressumLink: "Impressum",
-    datenschutzLink: "Datenschutz",
-    shareLabel: "Teilen",
-  },
 };
 
-// Current language — can be changed at runtime via setLang()
-let lang = "en";
+const lang = "en";
 
 function t(key) {
-  return T[lang][key] ?? key;
-}
-
-function setLang(l) {
-  lang = l;
-  document.getElementById("btn-en").classList.toggle("active", l === "en");
-  document.getElementById("btn-de").classList.toggle("active", l === "de");
-  applyTranslations();
+  return T.en[key] ?? key;
 }
 
 function applyTranslations() {
@@ -124,10 +72,4 @@ function applyTranslations() {
   if (pauseLabel) {
     pauseLabel.textContent = paused ? t("resumeBtn") : t("pauseBtn");
   }
-
-  // Sync language in any open modals
-  document.querySelectorAll(".modal-lang-en").forEach(el => { el.style.display = lang === "en" ? "" : "none"; });
-  document.querySelectorAll(".modal-lang-de").forEach(el => { el.style.display = lang === "de" ? "" : "none"; });
-
-  buildCatChips();
 }

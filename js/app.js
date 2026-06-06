@@ -3,7 +3,7 @@
 // ═══════════════════════════════════════════════════════
 
 // ── State ──────────────────────────────────────────────
-let selectedCats = new Set(CATEGORIES);
+let selectedCats = new Set();
 let currentTopic = null;
 let currentCat = null;
 let timerInterval = null;
@@ -29,17 +29,26 @@ function buildCatChips() {
 
 function toggleCat(cat, chip) {
   if (selectedCats.has(cat)) {
-    if (selectedCats.size === 1) return; // always keep at least one
     selectedCats.delete(cat);
     chip.classList.remove("selected");
   } else {
     selectedCats.add(cat);
     chip.classList.add("selected");
   }
+  updateDrawBtn();
+}
+
+function updateDrawBtn() {
+  const btn = document.getElementById("drawBtn");
+  if (!btn) return;
+  const empty = selectedCats.size === 0;
+  btn.disabled = empty;
+  btn.title = empty ? "Select at least one category" : "";
 }
 
 // ── Round logic ────────────────────────────────────────
 function startRound() {
+  if (selectedCats.size === 0) return;
   clearInterval(timerInterval);
   paused = false;
 
@@ -225,6 +234,7 @@ function renderHistory() {
 // ── Init ───────────────────────────────────────────────
 document.addEventListener("DOMContentLoaded", () => {
   buildCatChips();
+  updateDrawBtn();
   applyTranslations();
   showScreen("idle");
   setPhase("idle");

@@ -1,0 +1,502 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Contact — DiplomacyPrep</title>
+  <meta name="description" content="Get in touch with the DiplomacyPrep team." />
+
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&family=Source+Serif+4:ital,opsz,wght@0,8..60,300;0,8..60,400;0,8..60,500;1,8..60,300&family=JetBrains+Mono:wght@400;500&display=swap"
+    rel="stylesheet" />
+
+  <!-- Shared styles -->
+  <link rel="stylesheet" href="css/style.css" />
+
+  <style>
+    /* ── Contact-page specific styles ── */
+    .contact-wrap {
+      max-width: 580px;
+      margin: 0 auto;
+    }
+
+    .contact-hero {
+      text-align: center;
+      margin-bottom: 2rem;
+    }
+
+    .contact-hero .hero-crest {
+      font-size: 2rem;
+      color: var(--gold);
+      display: block;
+      margin-bottom: 0.6rem;
+    }
+
+    .contact-hero h2 {
+      font-family: var(--font-display);
+      font-size: 2rem;
+      color: var(--navy);
+      margin-bottom: 0.5rem;
+    }
+
+    .contact-hero p {
+      font-size: 0.93rem;
+      color: var(--ink-mid);
+      font-style: italic;
+      max-width: 420px;
+      margin: 0 auto;
+      line-height: 1.7;
+    }
+
+    .form-field {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+      margin-bottom: 1.2rem;
+    }
+
+    .form-label {
+      font-size: 0.7rem;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      color: var(--ink-muted);
+      font-weight: 500;
+    }
+
+    .form-input,
+    .form-textarea {
+      font-family: var(--font-body);
+      font-size: 0.95rem;
+      padding: 10px 14px;
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      background: #fff;
+      color: var(--ink);
+      outline: none;
+      transition: border-color 0.2s, box-shadow 0.2s;
+      width: 100%;
+    }
+
+    .form-input:focus,
+    .form-textarea:focus {
+      border-color: var(--gold);
+      box-shadow: 0 0 0 3px rgba(184, 147, 58, 0.12);
+    }
+
+    .form-input::placeholder,
+    .form-textarea::placeholder {
+      color: var(--ink-faint);
+      font-style: italic;
+    }
+
+    .form-textarea {
+      min-height: 150px;
+      resize: vertical;
+      line-height: 1.7;
+    }
+
+    .submit-row {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      margin-top: 1.5rem;
+      flex-wrap: wrap;
+    }
+
+    .btn-send {
+      background: var(--gold);
+      color: #fff;
+      border: 1.5px solid var(--gold);
+      padding: 12px 36px;
+      font-size: 1rem;
+      flex-shrink: 0;
+    }
+
+    .btn-send:hover:not(:disabled) {
+      background: var(--gold-light);
+    }
+
+    .btn-send:disabled {
+      opacity: 0.5;
+      cursor: not-allowed;
+    }
+
+    /* Status messages */
+    .status-msg {
+      font-size: 0.85rem;
+      padding: 10px 14px;
+      border-radius: var(--radius);
+      display: none;
+      margin-top: 1rem;
+      line-height: 1.5;
+    }
+
+    .status-msg.success {
+      display: block;
+      background: #edf7f0;
+      border-left: 3px solid var(--success);
+      color: var(--success);
+    }
+
+    .status-msg.error {
+      display: block;
+      background: #fdf0f0;
+      border-left: 3px solid var(--danger);
+      color: var(--danger);
+    }
+
+    /* Spinner inside button */
+    .spinner {
+      display: inline-block;
+      width: 14px;
+      height: 14px;
+      border: 2px solid rgba(255, 255, 255, 0.4);
+      border-top-color: #fff;
+      border-radius: 50%;
+      animation: spin 0.7s linear infinite;
+      vertical-align: middle;
+      margin-right: 6px;
+    }
+
+    @keyframes spin {
+      to {
+        transform: rotate(360deg);
+      }
+    }
+
+    /* Back link */
+    .back-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 0.82rem;
+      color: var(--ink-muted);
+      text-decoration: none;
+      margin-bottom: 2rem;
+      transition: color 0.2s;
+    }
+
+    .back-link:hover {
+      color: var(--gold);
+    }
+
+    /* ── Success state ── */
+    .success-state {
+      display: none;
+      text-align: center;
+      padding: 3rem 2rem;
+      animation: fadeIn 0.5s ease;
+    }
+
+    .success-icon {
+      font-size: 3rem;
+      margin-bottom: 1rem;
+      display: block;
+      animation: popIn 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    }
+
+    @keyframes popIn {
+      from {
+        transform: scale(0);
+        opacity: 0;
+      }
+
+      to {
+        transform: scale(1);
+        opacity: 1;
+      }
+    }
+
+    .success-state h3 {
+      font-family: var(--font-display);
+      font-size: 1.6rem;
+      color: var(--navy);
+      margin-bottom: 0.5rem;
+    }
+
+    .success-state p {
+      font-size: 0.93rem;
+      color: var(--ink-mid);
+      line-height: 1.7;
+      max-width: 380px;
+      margin: 0 auto 1.5rem;
+      font-style: italic;
+    }
+
+    .success-email-note {
+      display: inline-block;
+      background: var(--gold-pale);
+      border: 1px solid rgba(184, 147, 58, 0.3);
+      border-radius: var(--radius);
+      padding: 8px 16px;
+      font-size: 0.82rem;
+      color: var(--gold);
+      margin-bottom: 1.5rem;
+      font-family: var(--font-mono);
+    }
+
+    /* ── reCAPTCHA wrapper ── */
+    .recaptcha-wrap {
+      display: flex;
+      justify-content: center;
+      margin: 1rem 0 0.5rem;
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- ══ HEADER ══ -->
+  <header>
+    <div class="header-inner">
+      <div class="logo">
+        <div class="logo-seal">✦</div>
+        <div class="logo-text">
+          <h1>DiplomacyPrep</h1>
+          <p>Free Speech Training for Diplomatic Careers</p>
+        </div>
+      </div>
+      <div class="header-right">
+        <a class="contact-btn" href="contact.html" aria-label="Contact us" style="opacity:0.6; pointer-events:none;">✉
+          Contact Us</a>
+      </div>
+    </div>
+  </header>
+
+  <!-- ══ MAIN ══ -->
+  <main>
+    <div class="contact-wrap fade-in">
+
+      <a class="back-link" href="index.html">← Back to training</a>
+
+      <div class="contact-hero">
+        <span class="hero-crest">✉</span>
+        <h2>Get in Touch</h2>
+        <p>Have a question, suggestion, or just want to say hello? Send us a message and we'll get back to you.</p>
+      </div>
+
+      <!-- Form card -->
+      <div id="formCard" class="card" style="padding:2rem 2.2rem;">
+        <form id="contactForm" novalidate>
+
+          <div class="form-field">
+            <label class="form-label" for="contactName">Your Name</label>
+            <input class="form-input" type="text" id="contactName" name="from_name" placeholder="e.g. Marie Dupont"
+              required autocomplete="name" />
+          </div>
+
+          <div class="form-field">
+            <label class="form-label" for="contactEmail">Your Email</label>
+            <input class="form-input" type="email" id="contactEmail" name="reply_to"
+              placeholder="e.g. marie@example.com" required autocomplete="email" />
+          </div>
+
+          <div class="form-field">
+            <label class="form-label" for="contactMessage">Message</label>
+            <textarea class="form-textarea" id="contactMessage" name="message" placeholder="Write your message here…"
+              required></textarea>
+          </div>
+
+          <!-- reCAPTCHA -->
+          <div class="recaptcha-wrap">
+            <div class="g-recaptcha" data-sitekey="6LcAxRAtAAAAAJp2GgMIQ1EOyh30af1Bhzgqub77" id="recaptchaWidget"></div>
+          </div>
+
+          <div class="submit-row">
+            <button class="btn btn-send" type="submit" id="sendBtn">
+              ✦ Send Message
+            </button>
+          </div>
+
+          <div class="status-msg" id="statusMsg"></div>
+        </form>
+      </div>
+
+      <!-- Success state (shown after send) -->
+      <div id="successState" class="card success-state">
+        <span class="success-icon">✦</span>
+        <h3>Message Sent!</h3>
+        <p>Thank you for reaching out. We've received your message and will get back to you soon.</p>
+        <div class="success-email-note" id="successEmailNote"></div>
+        <button class="btn btn-gold" onclick="resetContactForm()" style="font-size:0.9rem; padding:10px 28px;">
+          ← Send Another Message
+        </button>
+      </div>
+
+    </div>
+  </main>
+
+  <!-- ══ FOOTER ══ -->
+  <footer class="legal-footer">
+    <button class="legal-link" onclick="openModal('impressum')">Legal Notice</button>
+    <span class="legal-sep">·</span>
+    <button class="legal-link" onclick="openModal('datenschutz')">Privacy Policy</button>
+  </footer>
+
+  <!-- ══ Google reCAPTCHA v2 ══ -->
+  <script src="https://www.google.com/recaptcha/api.js" async defer></script>
+
+  <!-- ══ EmailJS SDK ══ -->
+  <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
+  <script>
+    // ─────────────────────────────────────────────────────────
+    // EmailJS configuration
+    //
+    // ADMIN email (email 1): uses your Gmail service → always delivers to Gmail inbox
+    // USER confirmation (email 2): needs a separate SMTP service so it can send
+    //   to arbitrary addresses. Steps:
+    //     1. In EmailJS → Email Services → Add New Service → Personal Email / SMTP
+    //     2. Configure with AnglinaPav@t-online.de SMTP details:
+    //        Host: securesmtp.t-online.de  Port: 465  SSL: yes
+    //     3. Paste the new Service ID into EMAILJS_SMTP_SERVICE_ID below
+    // ─────────────────────────────────────────────────────────
+    const EMAILJS_PUBLIC_KEY = "CamcNzb9mz7FB5e6P";  // Account > API Keys
+    const EMAILJS_SERVICE_ID = "service_r8wzloi";    // Gmail service (admin email)
+    const EMAILJS_SMTP_SERVICE_ID = "service_2sf6xmr"; // SMTP service (user confirmation)
+    const EMAILJS_TEMPLATE_ID = "template_601tfu9";   // shared template
+
+    const configured = ![EMAILJS_PUBLIC_KEY, EMAILJS_SERVICE_ID, EMAILJS_TEMPLATE_ID]
+      .some(v => v.startsWith("YOUR_"));
+
+    const smtpConfigured = EMAILJS_SMTP_SERVICE_ID !== "YOUR_SMTP_SERVICE_ID";
+
+    if (configured) {
+      emailjs.init({ publicKey: EMAILJS_PUBLIC_KEY });
+    }
+
+    // ── Form submit ───────────────────────────────────────────
+    document.getElementById("contactForm").addEventListener("submit", async function (e) {
+      e.preventDefault();
+
+      const nameEl = document.getElementById("contactName");
+      const emailEl = document.getElementById("contactEmail");
+      const msgEl = document.getElementById("contactMessage");
+      const sendBtn = document.getElementById("sendBtn");
+      const statusMsg = document.getElementById("statusMsg");
+
+      // Basic validation
+      if (!nameEl.value.trim() || !emailEl.value.trim() || !msgEl.value.trim()) {
+        showStatus("error", "Please fill in all fields before sending.");
+        return;
+      }
+      if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(emailEl.value.trim())) {
+        showStatus("error", "Please enter a valid email address.");
+        return;
+      }
+
+      // reCAPTCHA validation
+      const captchaToken = (typeof grecaptcha !== "undefined") ? grecaptcha.getResponse() : "";
+      if (!captchaToken) {
+        showStatus("error", "⚠ Please complete the \"I'm not a robot\" check before sending.");
+        return;
+      }
+
+      // If EmailJS is not configured, fall back to mailto
+      if (!configured) {
+        const subject = encodeURIComponent("Message from " + nameEl.value.trim());
+        const body = encodeURIComponent(
+          "Name: " + nameEl.value.trim() + "\n" +
+          "Email: " + emailEl.value.trim() + "\n\n" +
+          msgEl.value.trim()
+        );
+        window.location.href = `mailto:AnglinaPav@t-online.de?subject=${subject}&body=${body}`;
+        return;
+      }
+
+      // Send via EmailJS
+      sendBtn.disabled = true;
+      sendBtn.innerHTML = '<span class="spinner"></span>Sending…';
+      clearStatus();
+
+      try {
+        const senderEmail = emailEl.value.trim();
+        const senderName = nameEl.value.trim();
+        const messageText = msgEl.value.trim();
+
+        // 1️⃣ Send to admin (via Gmail service)
+        await emailjs.send(EMAILJS_SERVICE_ID, EMAILJS_TEMPLATE_ID, {
+          name: senderName,
+          email: senderEmail,
+          message: messageText,
+          to_email: "AnglinaPav@t-online.de",
+          title: "New contact message from " + senderName,
+        });
+
+        // 2️⃣ Send confirmation copy to the user (via SMTP service)
+        if (smtpConfigured) {
+          try {
+            await emailjs.send(EMAILJS_SMTP_SERVICE_ID, EMAILJS_TEMPLATE_ID, {
+              name: "DiplomacyPrep",
+              email: "AnglinaPav@t-online.de",
+              message: `Hi ${senderName},\n\nThank you for reaching out! We received your message and will get back to you soon.\n\nYour message:\n"${messageText}"\n\n— The DiplomacyPrep Team`,
+              to_email: senderEmail,
+              title: "We received your message",
+            });
+          } catch (confirmErr) {
+            console.warn("User confirmation email failed (non-critical):", confirmErr);
+          }
+        }
+
+        // Show success state
+        document.getElementById("contactForm").reset();
+        if (typeof grecaptcha !== "undefined") {
+          grecaptcha.reset();
+        }
+        showSuccessState(senderEmail, smtpConfigured);
+
+      } catch (err) {
+        console.error("EmailJS error:", err);
+        if (typeof grecaptcha !== "undefined") {
+          grecaptcha.reset();
+        }
+        showStatus("error", "Something went wrong sending your message. Please try again.");
+      } finally {
+        sendBtn.disabled = false;
+        sendBtn.innerHTML = "✦ Send Message";
+      }
+    });
+
+    function showSuccessState(email, sentCopy) {
+      document.getElementById("formCard").style.display = "none";
+      const note = document.getElementById("successEmailNote");
+      note.textContent = sentCopy
+        ? "✓ A confirmation was sent to " + email
+        : "✓ We'll reply to " + email;
+      const success = document.getElementById("successState");
+      success.style.display = "block";
+      success.scrollIntoView({ behavior: "smooth", block: "center" });
+    }
+
+    function resetContactForm() {
+      document.getElementById("successState").style.display = "none";
+      document.getElementById("formCard").style.display = "block";
+      clearStatus();
+      window.scrollTo({ top: 0, behavior: "smooth" });
+    }
+
+    function showStatus(type, msg) {
+      const el = document.getElementById("statusMsg");
+      el.textContent = msg;
+      el.className = "status-msg " + type;
+      el.style.display = "block";
+    }
+
+    function clearStatus() {
+      const el = document.getElementById("statusMsg");
+      el.textContent = "";
+      el.className = "status-msg";
+      el.style.display = "none";
+    }
+
+    // ── Modal stubs ───────────────────────────────────────────
+    function openModal(id) { /* not used on this page */ }
+    function closeModal(id) { }
+  </script>
+
+</body>
+
+</html>
