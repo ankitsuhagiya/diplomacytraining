@@ -4,6 +4,15 @@
 
 A clean, professional web app for practising oral exams in international relations. Draw a random topic, take a minute to prepare notes, then deliver a timed free speech — in English or German.
 
+## Features
+
+- **Topic Selection & Drawing**: Choose topics from 12+ international relations categories (e.g. International Law, European Union, Security & Defence).
+- **Timed Practice**: Adjustable preparation time (1 to 2 minutes) and speaking time (1 to 5 minutes) with real-time countdown rings.
+- **Preparation Notes**: Take notes during the preparation phase. Your notes stay visible as a reference while speaking.
+- **Session History with Notes**: Browse past practices in your session. Click any entry in the history list to expand it and review the notes you took during that practice round.
+- **Sharing & Contacts**: Easily share your progress on LinkedIn or WhatsApp, get in touch with the team, or support the project.
+- **Polished & Responsive Design**: Optimized for readability on desktop and mobile with custom typography, clean parchment styling, sticky footer formatting, and zoomed layout support.
+
 ---
 
 ## Project structure
