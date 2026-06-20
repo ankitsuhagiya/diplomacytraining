@@ -451,6 +451,7 @@ main {
   transition: background-color 0.2s, border-color 0.2s;
   cursor: pointer;
   border: 1px solid transparent;
+  flex-shrink: 0;
 }
 .history-item:hover {
   background: var(--parchment-deep);

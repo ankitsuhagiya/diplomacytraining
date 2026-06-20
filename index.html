@@ -166,11 +166,25 @@
         <button class="btn btn-gold" id="drawBtn" style="font-size:1rem; padding:12px 36px;" onclick="startRound()">
           ✦ <span data-t="drawBtn">Draw Topic</span>
         </button>
+
+        <!-- Custom Topic Input -->
+        <div style="margin-top:2rem; border-top:1px dashed var(--border); padding-top:1.5rem; text-align:center;">
+          <div class="setting-label" style="margin-bottom:10px;" data-t="customTopicLabel">Or practice a custom topic</div>
+          <div style="display:flex; gap:8px; justify-content:center; max-width:480px; margin:0 auto; flex-wrap:wrap;">
+            <input type="text" id="customTopicInput" class="setting-input" data-t-placeholder="customTopicPlaceholder" placeholder="e.g. US-China trade dispute..." style="flex-grow:1; font-family:var(--font-body); padding:8px 12px; font-size:0.88rem; min-width:200px;" />
+            <button class="btn btn-primary" id="customDrawBtn" onclick="startCustomRound()" style="font-size:0.88rem; padding:8px 18px;">
+              ✦ <span data-t="customDrawBtn">Practice</span>
+            </button>
+          </div>
+        </div>
       </div>
 
       <!-- Session history -->
       <div id="historyWrap" style="display:none;">
-        <div class="section-label" data-t="histLabel">Session History</div>
+        <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:0.4rem; flex-wrap:wrap; gap:0.5rem;">
+          <div class="section-label" style="margin-bottom:0;" data-t="histLabel">Session History</div>
+          <button onclick="clearHistory()" class="btn btn-outline" style="font-size:0.68rem; padding:4px 10px; border-radius:3px; height:auto; text-transform:uppercase; letter-spacing:0.05em;" data-t="clearHistBtn">Clear History</button>
+        </div>
         <div class="card" style="padding:1.2rem 1.5rem;">
           <ul class="history-list" id="historyList"></ul>
         </div>
@@ -418,6 +432,7 @@
   <!-- Scripts — order matters: topics → i18n → app -->
   <script src="js/topics.js"></script>
   <script src="js/i18n.js"></script>
+  <script src="js/generator.js"></script>
   <script src="js/app.js"></script>
 
   <script>

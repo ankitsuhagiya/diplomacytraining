@@ -56,7 +56,13 @@ function startRound() {
   const cats = [...selectedCats];
   currentCat = cats[Math.floor(Math.random() * cats.length)];
   const pool = TOPICS[currentCat];
-  currentTopic = pool[Math.floor(Math.random() * pool.length)];
+  
+  // Filter out already-practiced topics in history
+  let unpracticed = pool.filter(t => !history.some(h => h.topic === t.en || h.topic === t.de));
+  if (unpracticed.length === 0) {
+    unpracticed = pool; // Fallback to full pool if all are practiced
+  }
+  currentTopic = unpracticed[Math.floor(Math.random() * unpracticed.length)];
 
   const topicDisplay = lang === "en" ? currentTopic.en : currentTopic.de;
   const subDisplay   = lang === "en" ? currentTopic.sub_en : currentTopic.sub_de;
@@ -74,6 +80,48 @@ function startRound() {
 
   const prepSec = parseInt(document.getElementById("prepTime").value);
   startTimer("prep", prepSec, () => autoStartSpeak());
+}
+
+function startCustomRound() {
+  const inputEl = document.getElementById("customTopicInput");
+  if (!inputEl) return;
+  const topicText = inputEl.value.trim();
+  if (!topicText) return;
+
+  clearInterval(timerInterval);
+  paused = false;
+
+  // Run generator
+  const analysis = generateSubtopicsForTopic(topicText);
+  currentCat = analysis.category;
+  
+  // Create mock topic object
+  currentTopic = {
+    en: topicText,
+    de: topicText,
+    sub_en: analysis.subtopics.join(", "),
+    sub_de: analysis.subtopics.join(", ")
+  };
+
+  const topicDisplay = topicText;
+  const subDisplay = analysis.subtopics.join(" • ");
+
+  document.getElementById("topicCat").textContent  = currentCat;
+  document.getElementById("topicText").textContent = topicDisplay;
+  document.getElementById("topicSub").textContent  = subDisplay;
+  document.getElementById("topicCat2").textContent  = currentCat;
+  document.getElementById("topicText2").textContent = topicDisplay;
+
+  document.getElementById("notesArea").value = "";
+
+  showScreen("prep");
+  setPhase("prep");
+
+  const prepSec = parseInt(document.getElementById("prepTime").value);
+  startTimer("prep", prepSec, () => autoStartSpeak());
+  
+  // Clear input
+  inputEl.value = "";
 }
 
 function autoStartSpeak() {
@@ -116,7 +164,7 @@ function finishRound() {
   renderEvalList();
 
   history.unshift({ topic: topicDisplay, cat: currentCat, time: timeStr, notes: notesVal });
-  if (history.length > 8) history.pop();
+  if (history.length > 50) history.pop();
   renderHistory();
 
   showScreen("done");
@@ -253,6 +301,11 @@ function renderHistory() {
     });
     list.appendChild(li);
   });
+}
+
+function clearHistory() {
+  history = [];
+  renderHistory();
 }
 
 // ── Init ───────────────────────────────────────────────
