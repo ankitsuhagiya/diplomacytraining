@@ -108,13 +108,14 @@ function finishRound() {
       ? `${elapsed} ${t("secSpoken")}`
       : `${Math.floor(elapsed / 60)}:${String(elapsed % 60).padStart(2, "0")} ${t("minSpoken")}`;
 
+  const notesVal = document.getElementById("notesArea").value || "";
+
   document.getElementById("doneTime").textContent = timeStr;
-  document.getElementById("doneNotes").textContent =
-    document.getElementById("notesArea").value || "—";
+  document.getElementById("doneNotes").textContent = notesVal || "—";
 
   renderEvalList();
 
-  history.unshift({ topic: topicDisplay, cat: currentCat, time: timeStr });
+  history.unshift({ topic: topicDisplay, cat: currentCat, time: timeStr, notes: notesVal });
   if (history.length > 8) history.pop();
   renderHistory();
 
@@ -212,6 +213,15 @@ function setPhase(p) {
   });
 }
 
+function escapeHtml(str) {
+  return str
+    .replace(/&/g, "&amp;")
+    .replace(/</g, "&lt;")
+    .replace(/>/g, "&gt;")
+    .replace(/"/g, "&quot;")
+    .replace(/'/g, "&#039;");
+}
+
 function renderHistory() {
   const wrap = document.getElementById("historyWrap");
   const list = document.getElementById("historyList");
@@ -221,12 +231,26 @@ function renderHistory() {
   history.forEach((h) => {
     const li = document.createElement("li");
     li.className = "history-item";
+    
+    const formattedNotes = h.notes ? escapeHtml(h.notes) : "<em>No notes taken.</em>";
+
     li.innerHTML = `
-      <span>
-        <span style="font-size:0.7rem;color:var(--gold);">${h.cat}</span><br>
-        <span class="history-topic">${h.topic}</span>
-      </span>
-      <span class="history-meta">${h.time}</span>`;
+      <div class="history-item-header">
+        <span style="flex-grow: 1;">
+          <span style="font-size:0.7rem;color:var(--gold);">${h.cat}</span><br>
+          <span class="history-topic">${h.topic}</span>
+        </span>
+        <span class="history-meta">
+          <span>${h.time}</span>
+          <span class="history-chevron">▶</span>
+        </span>
+      </div>
+      <div class="history-item-notes">${formattedNotes}</div>
+    `;
+
+    li.addEventListener("click", () => {
+      li.classList.toggle("expanded");
+    });
     list.appendChild(li);
   });
 }
