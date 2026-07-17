@@ -150,3 +150,34 @@ function generateSubtopicsForTopic(topicText) {
     subtopics: subtopics
   };
 }
+
+// ── AI Generation ──────────────────────────────────────
+async function generateSubtopicsWithAI(topicText) {
+  const url = '/api/generate';
+  
+  try {
+    const response = await fetch(url, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({ topicText })
+    });
+
+    if (!response.ok) {
+      let errMsg = `Server returned status ${response.status}`;
+      try {
+        const errData = await response.json();
+        if (errData.error) {
+          errMsg = errData.error;
+        }
+      } catch (e) {}
+      throw new Error(errMsg);
+    }
+
+    return await response.json();
+  } catch (error) {
+    console.error("Backend AI Generation Error:", error);
+    throw error;
+  }
+}

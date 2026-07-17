@@ -82,7 +82,7 @@ function startRound() {
   startTimer("prep", prepSec, () => autoStartSpeak());
 }
 
-function startCustomRound() {
+async function startCustomRound() {
   const inputEl = document.getElementById("customTopicInput");
   if (!inputEl) return;
   const topicText = inputEl.value.trim();
@@ -91,8 +91,29 @@ function startCustomRound() {
   clearInterval(timerInterval);
   paused = false;
 
-  // Run generator
-  const analysis = generateSubtopicsForTopic(topicText);
+  const btnText = document.getElementById("customDrawText");
+  const btnIcon = document.getElementById("customDrawIcon");
+  const originalText = btnText ? btnText.textContent : "Practice";
+  const btnEl = document.getElementById("customDrawBtn");
+  
+  if (btnEl) btnEl.disabled = true;
+  if (btnText) btnText.textContent = "Thinking...";
+  if (btnIcon) btnIcon.textContent = "⏳";
+
+  let analysis;
+
+  try {
+    analysis = await generateSubtopicsWithAI(topicText);
+  } catch (err) {
+    console.error(err);
+    alert("AI generation failed: " + err.message + "\n\nFalling back to offline generator.");
+    analysis = generateSubtopicsForTopic(topicText);
+  } finally {
+    if (btnEl) btnEl.disabled = false;
+    if (btnText) btnText.textContent = originalText;
+    if (btnIcon) btnIcon.textContent = "✦";
+  }
+
   currentCat = analysis.category;
   
   // Create mock topic object
