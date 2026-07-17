@@ -82,47 +82,7 @@ function startRound() {
   startTimer("prep", prepSec, () => autoStartSpeak());
 }
 
-function startCustomRound() {
-  const inputEl = document.getElementById("customTopicInput");
-  if (!inputEl) return;
-  const topicText = inputEl.value.trim();
-  if (!topicText) return;
 
-  clearInterval(timerInterval);
-  paused = false;
-
-  // Run generator
-  const analysis = generateSubtopicsForTopic(topicText);
-  currentCat = analysis.category;
-  
-  // Create mock topic object
-  currentTopic = {
-    en: topicText,
-    de: topicText,
-    sub_en: analysis.subtopics.join(", "),
-    sub_de: analysis.subtopics.join(", ")
-  };
-
-  const topicDisplay = topicText;
-  const subDisplay = analysis.subtopics.join(" • ");
-
-  document.getElementById("topicCat").textContent  = currentCat;
-  document.getElementById("topicText").textContent = topicDisplay;
-  document.getElementById("topicSub").textContent  = subDisplay;
-  document.getElementById("topicCat2").textContent  = currentCat;
-  document.getElementById("topicText2").textContent = topicDisplay;
-
-  document.getElementById("notesArea").value = "";
-
-  showScreen("prep");
-  setPhase("prep");
-
-  const prepSec = parseInt(document.getElementById("prepTime").value);
-  startTimer("prep", prepSec, () => autoStartSpeak());
-  
-  // Clear input
-  inputEl.value = "";
-}
 
 function autoStartSpeak() {
   document.getElementById("speakBtn").textContent = "▶ " + t("startSpeakBtn");

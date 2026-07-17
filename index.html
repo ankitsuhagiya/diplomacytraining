@@ -167,16 +167,7 @@
           ✦ <span data-t="drawBtn">Draw Topic</span>
         </button>
 
-        <!-- Custom Topic Input -->
-        <div style="margin-top:2rem; border-top:1px dashed var(--border); padding-top:1.5rem; text-align:center;">
-          <div class="setting-label" style="margin-bottom:10px;" data-t="customTopicLabel">Or practice a custom topic</div>
-          <div style="display:flex; gap:8px; justify-content:center; max-width:480px; margin:0 auto; flex-wrap:wrap;">
-            <input type="text" id="customTopicInput" class="setting-input" data-t-placeholder="customTopicPlaceholder" placeholder="e.g. US-China trade dispute..." style="flex-grow:1; font-family:var(--font-body); padding:8px 12px; font-size:0.88rem; min-width:200px;" />
-            <button class="btn btn-primary" id="customDrawBtn" onclick="startCustomRound()" style="font-size:0.88rem; padding:8px 18px;">
-              ✦ <span data-t="customDrawBtn">Practice</span>
-            </button>
-          </div>
-        </div>
+
       </div>
 
       <!-- Session history -->
@@ -432,7 +423,7 @@
   <!-- Scripts — order matters: topics → i18n → app -->
   <script src="js/topics.js"></script>
   <script src="js/i18n.js"></script>
-  <script src="js/generator.js"></script>
+
   <script src="js/app.js"></script>
 
   <script>
