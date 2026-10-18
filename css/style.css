@@ -392,6 +392,8 @@ main {
 .btn-outline:hover { background: var(--parchment-deep); }
 .btn-danger { background: transparent; color: var(--danger); border-color: rgba(139,48,48,0.3); }
 .btn-danger:hover { background: #fdf0f0; }
+.btn-danger.btn-paused { background: var(--danger); color: #fff; border-color: var(--danger); }
+.btn-danger.btn-paused:hover { background: #a03030; border-color: #a03030; }
 .btn:disabled { opacity: 0.4; cursor: not-allowed; }
 
 /* ─── SETTINGS ─── */

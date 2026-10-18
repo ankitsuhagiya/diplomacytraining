@@ -158,7 +158,11 @@
 
         <!-- Category filter -->
         <div style="margin-bottom:1.5rem;">
-          <div class="setting-label" style="text-align:center; margin-bottom:8px;" data-t="catLabel">Topic categories
+          <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:8px; flex-wrap:wrap; gap:6px;">
+            <div class="setting-label" data-t="catLabel">Topic categories</div>
+            <button id="selectAllBtn" class="btn btn-outline"
+              style="font-size:0.72rem; padding:4px 12px; border-radius:3px; height:auto; text-transform:uppercase; letter-spacing:0.05em;"
+              onclick="selectAllToggle()">✓ Select All</button>
           </div>
           <div class="chip-row" style="justify-content:center;" id="catChips"></div>
         </div>
@@ -166,7 +170,6 @@
         <button class="btn btn-gold" id="drawBtn" style="font-size:1rem; padding:12px 36px;" onclick="startRound()">
           ✦ <span data-t="drawBtn">Draw Topic</span>
         </button>
-
 
       </div>
 
@@ -225,6 +228,9 @@
           <button class="btn btn-gold" id="speakBtn" onclick="startSpeak()">
             <span data-t="startSpeakBtn">Begin Speaking</span> →
           </button>
+          <button id="prepPauseBtn" class="btn btn-danger" onclick="togglePrepPause()" style="min-width:110px;">
+            <span id="prepPauseLabel" data-t="pauseBtn">⏸ Pause</span>
+          </button>
           <button class="btn btn-outline" onclick="resetRound()" data-t="newTopicBtn">New Topic</button>
         </div>
       </div>
@@ -254,8 +260,8 @@
         </div>
 
         <div class="btn-row" style="justify-content:center;">
-          <button class="btn btn-danger" onclick="togglePause()">
-            <span id="pauseLabel" data-t="pauseBtn">⏸ Pause</span>
+          <button id="speakPauseBtn" class="btn btn-danger" onclick="toggleSpeakPause()">
+            <span id="speakPauseLabel" data-t="pauseBtn">⏸ Pause</span>
           </button>
           <button class="btn btn-primary" onclick="finishRound()" data-t="finishBtn">✓ Finish Early</button>
         </div>
